@@ -1,0 +1,23 @@
+def vacuum_world():
+    A = int(input("Enter state of A (0 for clean, 1 for dirty): "))
+    B = int(input("Enter state of B (0 for clean, 1 for dirty): "))
+    loc = input("Enter location (A or B): ").upper()
+    cost, s = 0, {'A': A, 'B': B}
+
+    if loc == 'A':
+        print("Cleaned A." if s['A'] else "A is clean"); cost += s['A']; s['A'] = 0
+        print("Is A clean now?:", s['A']); print("Is B dirty?:", s['B'])
+        print("Moving vacuum right")
+        print("Cleaned B." if s['B'] else "B is clean"); cost += s['B']; s['B'] = 0
+    elif loc == 'B':
+        print("Cleaned B." if s['B'] else "B is clean"); cost += s['B']; s['B'] = 0
+        print("Is B clean now?:", s['B']); print("Is A dirty?:", s['A'])
+        print("Moving vacuum left")
+        print("Cleaned A." if s['A'] else "A is clean"); cost += s['A']; s['A'] = 0
+    else:
+        print("Turning vacuum off")
+
+    print("Cost:", cost, "\n", s)
+    print("Samriddhi Singh 1BM23CS295")
+
+vacuum_world()
