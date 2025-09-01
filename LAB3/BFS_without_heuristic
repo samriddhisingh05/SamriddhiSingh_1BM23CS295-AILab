@@ -1,0 +1,105 @@
+from collections import deque
+
+moves = {
+    'Up': -3,
+    'Down': 3,
+    'Left': -1,
+    'Right': 1
+}
+
+def is_valid_move(pos, move):
+    if move == 'Left' and pos % 3 == 0:
+        return False
+    if move == 'Right' and pos % 3 == 2:
+        return False
+    if move == 'Up' and pos < 3:
+        return False
+    if move == 'Down' and pos > 5:
+        return False
+    return True
+
+def get_neighbors(state):
+    neighbors = []
+    zero_pos = state.index(0)
+    for move, pos_change in moves.items():
+        if is_valid_move(zero_pos, move):
+            new_zero_pos = zero_pos + pos_change
+            new_state = list(state)
+            new_state[zero_pos], new_state[new_zero_pos] = new_state[new_zero_pos], new_state[zero_pos]
+            neighbors.append((tuple(new_state), move))
+    return neighbors
+
+def bfs(start_state, goal_state):
+    queue = deque()
+    queue.append((start_state, []))
+    visited = set()
+    visited.add(start_state)
+    explored_states = []
+
+    while queue:
+        current_state, path = queue.popleft()
+        explored_states.append(current_state)
+        if current_state == goal_state:
+            return path, explored_states
+
+        for neighbor, move in get_neighbors(current_state):
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append((neighbor, path + [move]))
+    return None, explored_states
+
+def input_state(prompt):
+    while True:
+        raw = input(prompt).strip().split()
+        if len(raw) != 9:
+            print("Please enter exactly 9 numbers separated by spaces.")
+            continue
+        try:
+            numbers = [int(x) for x in raw]
+        except ValueError:
+            print("Please enter valid integers only.")
+            continue
+        if set(numbers) != set(range(9)):
+            print("Numbers must be from 0 to 8 without repetition.")
+            continue
+        return tuple(numbers)
+
+def print_state(state):
+    for i in range(3):
+        print(state[3*i:3*i+3])
+    print()
+
+def main():
+    start_state = input_state("Enter the initial state (9 numbers from 0 to 8, space separated): ")
+    goal_state = input_state("Enter the goal state (9 numbers from 0 to 8, space separated): ")
+
+    print("\nStarting BFS...\n")
+    path, explored_states = bfs(start_state, goal_state)
+
+    print(f"Total states explored: {len(explored_states)}\n")
+
+    print("States explored in order:")
+    for idx, state in enumerate(explored_states, 1):
+        print(f"State {idx}:")
+        print_state(state)
+
+    if path is None:
+        print("No solution found.")
+    else:
+        print(f"Number of moves to solve: {len(path)}")
+        print("Moves to solve:")
+        current = start_state
+        print("Initial state:")
+        print_state(current)
+        for i, move in enumerate(path, 1):
+            print(f"Move {i}: {move}")
+            zero_pos = current.index(0)
+            pos_change = moves[move]
+            new_zero_pos = zero_pos + pos_change
+            new_state = list(current)
+            new_state[zero_pos], new_state[new_zero_pos] = new_state[new_zero_pos], new_state[zero_pos]
+            current = tuple(new_state)
+            print_state(current)
+
+if __name__ == "__main__":
+    main()
