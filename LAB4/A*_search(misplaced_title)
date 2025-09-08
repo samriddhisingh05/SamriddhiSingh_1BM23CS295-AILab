@@ -1,8 +1,8 @@
-#MISPLACED TILE
+
 import heapq
 from itertools import count
 
-# -------------------- Heuristic --------------------
+
 def misplaced_heuristic(board, goal):
     """h(n): number of tiles not in their goal position (excluding blank 0)."""
     n = len(board)
@@ -13,7 +13,7 @@ def misplaced_heuristic(board, goal):
                 misplaced += 1
     return misplaced
 
-# -------------------- Moves --------------------
+
 def find_blank(board):
     n = len(board)
     for i in range(n):
@@ -24,7 +24,7 @@ def find_blank(board):
 
 
 def neighbors(board):
-    """Generate neighboring boards by sliding one tile into the blank."""
+
     n = len(board)
     x, y = find_blank(board)
     dirs = [(0,1),(0,-1),(1,0),(-1,0)]
@@ -37,7 +37,6 @@ def neighbors(board):
             res.append(tuple(tuple(row) for row in b))
     return res
 
-# -------------------- Solvability --------------------
 def flatten(board):
     return [x for row in board for x in row]
 
@@ -83,7 +82,6 @@ def is_solvable(start, goal):
         # When using relative permutation to goal, parity of blank rows must match
         return (inv + blank_row) % 2 == (0 + goal_blank_row) % 2
 
-# -------------------- A* Search --------------------
 def reconstruct_path(came_from, current):
     path = [current]
     while current in came_from:
@@ -149,7 +147,6 @@ def a_star_misplaced(start, goal):
 
     return None, None, expansions, len(closed)
 
-# -------------------- I/O --------------------
 def read_board(n, prompt):
     print(prompt)
     board = []
