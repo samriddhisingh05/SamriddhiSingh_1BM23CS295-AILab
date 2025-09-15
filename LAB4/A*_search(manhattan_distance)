@@ -1,6 +1,5 @@
 import heapq
 
-# Manhattan distance heuristic
 def manhattan(state, goal):
     dist = 0
     for i in range(9):
@@ -11,7 +10,6 @@ def manhattan(state, goal):
             dist += abs(x1 - x2) + abs(y1 - y2)
     return dist
 
-# Neighbors (possible moves of blank)
 def get_neighbors(state):
     neighbors = []
     i = state.index(0)
@@ -26,7 +24,7 @@ def get_neighbors(state):
             neighbors.append(tuple(new_state))
     return neighbors
 
-# A* Search
+
 def a_star(start, goal):
     open_heap = [(manhattan(start, goal), 0, start, [])]
     visited = set()
@@ -43,7 +41,7 @@ def a_star(start, goal):
                 heapq.heappush(open_heap, (new_f, new_g, nb, path + [state]))
     return None, -1
 
-# ---------- MAIN ----------
+
 print("Enter initial state (9 numbers, 0 for blank):")
 start = tuple(map(int, input().split()))
 print("Enter goal state (9 numbers, 0 for blank):")
@@ -60,3 +58,4 @@ if path:
         print()
 else:
     print("No solution found")
+print("Samriddhi Singh,1BM23CS295")
