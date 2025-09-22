@@ -17,7 +17,7 @@ def get_neighbors(board):
     for i in range(n):
         for j in range(i + 1, n):
             new_board = list(board)
-            # Swap queens in columns i and j
+          
             new_board[i], new_board[j] = new_board[j], new_board[i]
             neighbors.append(new_board)
     return neighbors
@@ -39,7 +39,7 @@ def hill_climbing(board, max_sideways=0):  # sideways moves disabled
         best_neighbors = [nb for nb, h in neighbor_heuristics if h == best_heur]
 
         if best_heur > current_heur:
-            # No improvement, reached local minimum
+          
             return None, steps, path
 
         next_board = random.choice(best_neighbors)
