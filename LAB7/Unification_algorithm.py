@@ -19,7 +19,21 @@ def unify(x, y, subst):
     elif isinstance(x, tuple) and isinstance(y, tuple):
         if x[0] != y[0] or len(x) != len(y):
             return None
-         return None
+        for a, b in zip(x[1:], y[1:]):
+            subst = unify(a, b, subst)
+            if subst is None:
+                return None
+        return subst
+    else:
+        return None
+
+def unify_var(var, x, subst):
+    if var in subst:
+        return unify(subst[var], x, subst)
+    elif x in subst:
+        return unify(var, subst[x], subst)
+    elif occurs_check(var, x, subst):
+        return None
     else:
         subst[var] = x
         return subst
@@ -66,19 +80,5 @@ if subst:
 else:
     formatted_subst = None
 
-print("Most General Unifier (MGU):", formatted_subst) for a, b in zip(x[1:], y[1:]):
-            subst = unify(a, b, subst)
-            if subst is None:
-                return None
-        return subst
-    else:
-        return None
-
-def unify_var(var, x, subst):
-    if var in subst:
-        return unify(subst[var], x, subst)
-    elif x in subst:
-        return unify(var, subst[x], subst)
-    elif occurs_check(var, x, subst):
-
+print("Most General Unifier (MGU):", formatted_subst)
 print("Samriddhi Singh,1BM23CS295")
