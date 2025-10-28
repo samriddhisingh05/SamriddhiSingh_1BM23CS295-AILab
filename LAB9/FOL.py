@@ -39,14 +39,14 @@ def fol_resolution(kb, query):
     """)
 
     print("="*55)
-    print(f"✅ Therefore, the query '{query}' is PROVEN by Resolution.")
+    print(f"Therefore, the query '{query}' is PROVEN by Resolution.")
     print("="*55 + "\n")
 
 
-print("\n🧩 FIRST ORDER LOGIC - RESOLUTION METHOD")
-print("----------------------------------------")
+print("\n FIRST ORDER LOGIC - RESOLUTION METHOD")
 
-# Step 1: Input Knowledge Base
+
+
 n = int(input("Enter the number of statements in the Knowledge Base: "))
 
 kb = []
